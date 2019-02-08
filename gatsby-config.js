@@ -2,5 +2,5 @@ module.exports = {
   siteMetadata: {
     title: `2019 Profile`
   },
-  plugins: [`gatsby-plugin-eslint`]
+  plugins: [`gatsby-plugin-eslint`, `gatsby-plugin-emotion`]
 }
