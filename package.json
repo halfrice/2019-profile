@@ -1,0 +1,26 @@
+{
+  "name": "2019-profile",
+  "private": true,
+  "description": "A modern professional profile for 2019.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "test": ""
+  },
+  "dependencies": {
+    "gatsby": "^2.0.117",
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/halfrice/2019-profile"
+  },
+  "bugs": {
+    "url": "https://github.com/gatsbyjs/gatsby/issues"
+  }
+}
