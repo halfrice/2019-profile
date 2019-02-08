@@ -5,6 +5,9 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
+    "format": "prettier --write \"src/**/*.js\"",
+    "format:check": "prettier --list-difference \"src/**/*.js\"",
+    "lint": "eslint \"src/**/*.{js,jsx}\"",
     "build": "gatsby build",
     "develop": "gatsby develop",
     "start": "npm run develop",
@@ -22,5 +25,18 @@
   },
   "bugs": {
     "url": "https://github.com/gatsbyjs/gatsby/issues"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.13.0",
+    "eslint-config-prettier": "^4.0.0",
+    "eslint-loader": "^2.1.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-node": "^8.0.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "gatsby-plugin-eslint": "^2.0.4",
+    "prettier": "^1.16.4"
   }
 }
