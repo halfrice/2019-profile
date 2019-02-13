@@ -4,8 +4,7 @@ const typography = new Typography({
   baseFontSize: "16px",
   baseLineHeight: 1.55,
   headerFontFamily: ["Montserrat", "sans-serif"],
-  bodyFontFamily: ["Merriweather", "serif"]
-  // bodyFontFamily: ["Merriweather", "Open Sans", "serif"]
+  bodyFontFamily: ["sans-serif"]
 })
 
 delete typography.googleFonts
