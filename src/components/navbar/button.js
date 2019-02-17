@@ -8,8 +8,6 @@ class Button extends React.Component {
       <div
         css={css`
           display: flex;
-          align-items: center;
-          justify-content: center;
           padding: 0.618rem 1rem;
           &:hover {
             background: black;

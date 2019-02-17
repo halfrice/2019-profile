@@ -1,6 +1,7 @@
 import React from "react"
 import { css } from "@emotion/core"
 import Navbar from "./navbar/navbar"
+import Footer from "./footer/footer"
 
 class Layout extends React.Component {
   render() {
@@ -11,9 +12,7 @@ class Layout extends React.Component {
         css={css`
           background-color: #000;
           width: 100%;
-          margin: 0 auto;
-          padding: 0;
-          padding-top: 0;
+          min-height: 100%;
           color: #fff;
           box-shadow: 0 0 3rem rgba(0, 0, 0, 0.6);
           -moz-box-shadow: 0 0 3rem rgba(0, 0, 0, 0.6);
@@ -28,6 +27,7 @@ class Layout extends React.Component {
         >
           {children}
         </div>
+        <Footer />
       </div>
     )
   }

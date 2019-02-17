@@ -9,7 +9,6 @@ class Navbar extends React.Component {
         css={css`
           display: flex;
           background: #333;
-          border: 1px solid #333;
           text-decoration: none;
         `}
       >
