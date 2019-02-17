@@ -1,21 +1,20 @@
 import React from "react"
 import Layout from "../components/layout"
 import Header from "../components/header"
+import { graphql } from "gatsby"
+import Img from "gatsby-image"
 import { css } from "@emotion/core"
 
-class Index extends React.Component {
+export default class Index extends React.Component {
   render() {
     return (
       <Layout>
         <Header pageTitle="Blog" />
-        <img
+        <Img
+          fluid={this.props.data.splashImage.childImageSharp.fluid}
           css={css`
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+            margin-bottom: 1.5rem;
           `}
-          src="https://source.unsplash.com/random/640x480"
-          alt=""
         />
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -31,4 +30,14 @@ class Index extends React.Component {
   }
 }
 
-export default Index
+export const splashImageQuery = graphql`
+  query {
+    splashImage: file(relativePath: { regex: "/splash.jpg/" }) {
+      childImageSharp {
+        fluid(maxWidth: 1280, maxHeight: 640) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
