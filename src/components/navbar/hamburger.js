@@ -1,18 +1,17 @@
 import React from "react"
 import { css } from "@emotion/core"
-import { Link } from "gatsby"
 
-class Button extends React.Component {
+class Hamburger extends React.Component {
   render() {
     return (
       <div
         css={css`
           display: flex;
+          height: 2.75rem;
           overflow: hidden;
         `}
       >
-        <Link
-          to={this.props.link}
+        <div
           css={css`
             padding: 0.618rem 1rem;
             text-decoration: none;
@@ -21,17 +20,12 @@ class Button extends React.Component {
               color: #999;
             }
           `}
-          activeStyle={{
-            color: "#999",
-            background: "black",
-            borderBottom: "0.1rem solid #ff0075"
-          }}
         >
-          {this.props.text}
-        </Link>
+          |||
+        </div>
       </div>
     )
   }
 }
 
-export default Button
+export default Hamburger
