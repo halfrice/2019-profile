@@ -5,12 +5,7 @@ import { Link } from "gatsby"
 class Button extends React.Component {
   render() {
     return (
-      <div
-        css={css`
-          display: flex;
-          overflow: hidden;
-        `}
-      >
+      <>
         <Link
           to={this.props.link}
           css={css`
@@ -29,7 +24,7 @@ class Button extends React.Component {
         >
           {this.props.text}
         </Link>
-      </div>
+      </>
     )
   }
 }

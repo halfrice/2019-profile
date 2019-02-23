@@ -4,13 +4,7 @@ import { css } from "@emotion/core"
 class Hamburger extends React.Component {
   render() {
     return (
-      <div
-        css={css`
-          display: flex;
-          height: 2.75rem;
-          overflow: hidden;
-        `}
-      >
+      <>
         <div
           css={css`
             padding: 0.618rem 1rem;
@@ -23,7 +17,7 @@ class Hamburger extends React.Component {
         >
           |||
         </div>
-      </div>
+      </>
     )
   }
 }

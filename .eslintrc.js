@@ -21,11 +21,12 @@ module.exports = {
     node: true
   },
   rules: {
-    "react/prop-types": 0,
     "no-console": 1,
+    "no-unused-vars": ["warn", { args: "all" }],
+    "react/display-name": [0],
     "react/jsx-uses-react": "error",
     "react/jsx-uses-vars": "error",
-    "react/display-name": [0],
+    "react/prop-types": 0,
     "emotion/no-vanilla": "error",
     "emotion/import-from-emotion": "error",
     "emotion/styled-import": "error"
