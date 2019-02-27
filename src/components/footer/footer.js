@@ -3,111 +3,111 @@ import { css } from "@emotion/core"
 import FooterLink from "./footer-link"
 import Clock from "./clock"
 
+import { rhythm } from "../../utils/typography"
+
 class Footer extends React.Component {
   render() {
     return (
       <div
+        className="footer"
+        id="footer"
         css={css`
-          bottom: 0;
-          width: 100%;
-          padding: 0 1rem 1.618rem;
+          color: #888;
           background: #000;
+          font-family: "Montserrat", "Sans-Serif";
+          font-size: 12px;
+          margin: 0px auto;
+          max-width: ${rhythm(48)};
+          padding: ${rhythm(0.5)} ${rhythm(0.75)};
         `}
       >
         <div
-          className="footer"
-          id="footer"
+          className="promo"
           css={css`
-            font-size: 11px;
-            line-height: 1.34rem;
-            color: #888;
+            border-bottom: 1px solid #333;
+            padding: 0 0 ${rhythm(0.5)} 0;
+            a {
+              text-decoration: none;
+              color: deeppink;
+              &:hover {
+                text-decoration: underline;
+                color: lavenderpink;
+              }
+            }
+          `}
+        >
+          {`Konichiwa `}
+          <a
+            css={css`
+              a {
+                color: #888;
+              }
+            `}
+            href="/"
+          >
+            fake@email.com
+          </a>
+        </div>
+        <div
+          className="status"
+          css={css`
+            display: flex;
+            padding: ${rhythm(0.25)} 0 0;
+            @media only screen and (max-width: 768px) {
+              flex-direction: column;
+            }
           `}
         >
           <div
-            className="promo"
+            className="legalese"
             css={css`
-              margin: 0 0 0.6rem 0;
-              padding: 0 0 0.4rem 0;
-              border-bottom: 1px solid #333;
-              a {
-                text-decoration: none;
-                color: deeppink;
-                &:hover {
-                  text-decoration: underline;
-                  color: lavenderpink;
-                }
+              padding: ${rhythm(0.25)} 0 0;
+              text-align: left;
+              width: 33%;
+              @media only screen and (max-width: 768px) {
+                width: 100%;
               }
             `}
           >
-            {`Konichiwa `}
-            <a
-              css={css`
-                a {
-                  color: #888;
-                }
-              `}
-              href="/"
-            >
-              fake@email.com
-            </a>
+            © {new Date().getFullYear()} Corporation Inc
           </div>
           <div
-            className="status"
+            className="links"
             css={css`
               display: flex;
+              justify-content: center;
+              padding: ${rhythm(0.25)} 0 0;
+              width: 34%;
+              a {
+                color: #888;
+                text-decoration: none;
+                &:hover {
+                  color: white;
+                  text-decoration: underline;
+                }
+              }
               @media only screen and (max-width: 768px) {
-                flex-direction: column;
+                justify-content: start;
               }
             `}
           >
-            <div
-              className="legalese"
-              css={css`
-                width: 33%;
+            <FooterLink displayText={`Fapple`} link={`/`} />
+            <FooterLink displayText={`Aviato`} link={`/`} lastLink={false} />
+            <FooterLink displayText={`Hooli`} link={`/`} lastLink={true} />
+          </div>
+          <div
+            className="clock"
+            css={css`
+              padding: ${rhythm(0.25)} 0;
+              text-align: right;
+              width: 33%;
+              @media only screen and (max-width: 768px) {
                 text-align: left;
-                @media only screen and (max-width: 768px) {
-                  width: 100%;
-                }
-              `}
-            >
-              © {new Date().getFullYear()} Corporation Inc
-            </div>
-            <div
-              className="links"
-              css={css`
-                width: 34%;
-                display: flex;
-                justify-content: center;
-                a {
-                  text-decoration: none;
-                  color: #888;
-                  &:hover {
-                    text-decoration: underline;
-                    color: white;
-                  }
-                }
-                @media only screen and (max-width: 768px) {
-                  justify-content: start;
-                }
-              `}
-            >
-              <FooterLink displayText={`Fapple`} link={`/`} />
-              <FooterLink displayText={`Aviato`} link={`/`} lastLink={false} />
-              <FooterLink displayText={`Hooli`} link={`/`} lastLink={true} />
-            </div>
-            <div
-              className="clock"
-              css={css`
-                width: 33%;
-                text-align: right;
-                @media only screen and (max-width: 768px) {
-                  width: 100%;
-                  text-align: left;
-                }
-              `}
-            >
-              <Clock />
-            </div>
+                width: 100%;
+              }
+            `}
+          >
+            <Clock />
           </div>
         </div>
       </div>

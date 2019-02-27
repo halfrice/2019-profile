@@ -2,6 +2,36 @@ import React from "react"
 import { css } from "@emotion/core"
 import { Link } from "gatsby"
 
+import { rhythm } from "../../utils/typography"
+import { FaCoffee } from "react-icons/fa"
+
+export const itemStyle = css`
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  height: 100%:
+  justify-content: center;
+  padding: ${rhythm(0.5)} ${rhythm(0.75)};
+  text-decoration: none;
+  &:hover {
+    background: #222;
+    color: #999;
+  }
+  @media only screen and (max-width: 768px) {
+    font-weight: 400;
+    justify-content: start;
+  }
+`
+
+// Must be written without semicolons otherwise will not render when
+// placed inside anything other than a css element, eg activeStyle={}.
+export const itemActiveStyle = {
+  color: "#999",
+  background: "black",
+  borderBottom: "0.1rem solid #ff0075"
+}
+
 class Navbar extends React.Component {
   state = {
     width: window.innerWidth,
@@ -43,16 +73,16 @@ class Navbar extends React.Component {
           <a
             className="item"
             css={css`
-              padding: 0.618rem 1rem;
-              text-decoration: none;
-              color: white;
+              ${itemStyle};
               font-weight: 700;
-              cursor: pointer;
+              justify-content: start;
+              min-height: ${rhythm(2)};
               &:hover {
                 color: #999;
                 cursor: pointer;
               }
               @media only screen and (max-width: 768px) {
+                font-weight: 700;
               }
             `}
             onClick={() => this.handleHamburgerClick()}
@@ -65,6 +95,26 @@ class Navbar extends React.Component {
     }
   }
 
+  renderLogo = () => {
+    return (
+      <>
+        <a
+          className="item"
+          css={css`
+            ${itemStyle};
+            color: deeppink;
+            align-items: center;
+            font-size: 20px;
+            margin-left: auto;
+            // justify-content: ${this.state.mobile ? "center" : "right"};
+          `}
+        >
+          <FaCoffee />
+        </a>
+      </>
+    )
+  }
+
   renderSpacer = () => {
     if (this.state.navVisible) {
       return (
@@ -73,8 +123,8 @@ class Navbar extends React.Component {
             className="spacer"
             css={css`
               height: 1px;
-              margin: 0 1rem 0 1rem;
-              border-bottom: 1px solid #888;
+              margin: 0 ${rhythm(0.75)} ${rhythm(0.5)};
+              border-bottom: 1px solid #555;
             `}
           />
         </>
@@ -82,41 +132,8 @@ class Navbar extends React.Component {
     }
   }
 
-  itemActiveStyle() {
-    if (this.state.mobile) {
-      return {
-        color: "#999",
-        background: "black",
-        borderBottom: "0.1rem solid #ff0075"
-      }
-    } else {
-      return false
-    }
-  }
-
   renderLinks = () => {
     if (this.state.navVisible) {
-      const itemStyle = css`
-        padding: 0.618rem 1rem;
-        text-decoration: none;
-        color: white;
-        cursor: pointer;
-        &:hover {
-          background: #222;
-          color: #999;
-        }
-        @media only screen and (max-width: 768px) {
-          margin: 0 1rem;
-          font-weight: 100;
-        }
-      `
-      // Must be written without semicolons otherwise will not render when
-      // placed inside anything other than a css element, eg activeStyle={}.
-      const itemActiveStyle = {
-        color: "#999",
-        background: "black",
-        borderBottom: "0.1rem solid #ff0075"
-      }
       return (
         <>
           <Link
@@ -159,21 +176,31 @@ class Navbar extends React.Component {
   render() {
     return (
       <div
-        className="navbar"
+        className="navbar-wrapper"
         css={css`
-          display: flex;
-          flex-direction: column;
-          min-height: 2.75rem;
+          width: 100%;
           background: #333;
-          font-weight: 100;
-          text-decoration: none;
-          @media only screen and (min-width: 768px) {
-            flex-direction: row;
-          }
         `}
       >
-        {this.renderHamburger()}
-        {this.renderLinks()}
+        <div
+          className="navbar"
+          css={css`
+            display: flex;
+            flex-direction: column;
+            font-family: "Montserrat", "sans-serif";
+            margin: 0px auto;
+            max-width: ${rhythm(48)};
+            min-height: ${rhythm(2)};
+            text-decoration: none;
+            @media only screen and (min-width: 768px) {
+              flex-direction: row;
+            }
+          `}
+        >
+          {this.renderHamburger()}
+          {this.renderLinks()}
+          {/* {this.renderLogo()} */}
+        </div>
       </div>
     )
   }

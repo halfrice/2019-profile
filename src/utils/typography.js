@@ -1,10 +1,10 @@
 import Typography from "typography"
 
 const typography = new Typography({
-  baseFontSize: "16px",
+  baseFontSize: "14px",
   baseLineHeight: 1.55,
   headerFontFamily: ["Montserrat", "sans-serif"],
-  bodyFontFamily: ["sans-serif"]
+  bodyFontFamily: ["Roboto", "sans-serif"]
 })
 
 delete typography.googleFonts
