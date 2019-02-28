@@ -1,6 +1,7 @@
 import React from "react"
 import { css } from "@emotion/core"
 import { Link } from "gatsby"
+import Nightmode from "./nightmode"
 
 import { rhythm } from "../../utils/typography"
 import { FaCoffee } from "react-icons/fa"
@@ -28,7 +29,7 @@ export const itemStyle = css`
 // placed inside anything other than a css element, eg activeStyle={}.
 export const itemActiveStyle = {
   color: "#999",
-  background: "black",
+  background: "#000",
   borderBottom: "0.1rem solid #ff0075"
 }
 
@@ -67,32 +68,42 @@ class Navbar extends React.Component {
   }
 
   renderHamburger = () => {
-    if (this.state.mobile) {
-      return (
-        <>
-          <a
-            className="item"
-            css={css`
-              ${itemStyle};
+    return (
+      <>
+        <a
+          css={css`
+            ${itemStyle};
+            font-weight: 700;
+            min-height: ${rhythm(2)};
+            &:hover {
+              color: #999;
+              cursor: pointer;
+            }
+            @media only screen and (max-width: 768px) {
               font-weight: 700;
-              justify-content: start;
-              min-height: ${rhythm(2)};
-              &:hover {
-                color: #999;
-                cursor: pointer;
-              }
-              @media only screen and (max-width: 768px) {
-                font-weight: 700;
-              }
-            `}
-            onClick={() => this.handleHamburgerClick()}
-          >
-            <span>|||</span>
-          </a>
-          {this.renderSpacer()}
-        </>
-      )
-    }
+            }
+          `}
+          onClick={() => this.handleHamburgerClick()}
+        >
+          <span>|||</span>
+        </a>
+      </>
+    )
+  }
+
+  renderSpacer = () => {
+    return (
+      <>
+        <div
+          className="spacer"
+          css={css`
+            height: 1px;
+            margin: 0 ${rhythm(0.75)} ${rhythm(0.5)};
+            border-bottom: 1px solid #555;
+          `}
+        />
+      </>
+    )
   }
 
   renderLogo = () => {
@@ -106,30 +117,12 @@ class Navbar extends React.Component {
             align-items: center;
             font-size: 20px;
             margin-left: auto;
-            // justify-content: ${this.state.mobile ? "center" : "right"};
           `}
         >
           <FaCoffee />
         </a>
       </>
     )
-  }
-
-  renderSpacer = () => {
-    if (this.state.navVisible) {
-      return (
-        <>
-          <div
-            className="spacer"
-            css={css`
-              height: 1px;
-              margin: 0 ${rhythm(0.75)} ${rhythm(0.5)};
-              border-bottom: 1px solid #555;
-            `}
-          />
-        </>
-      )
-    }
   }
 
   renderLinks = () => {
@@ -173,6 +166,45 @@ class Navbar extends React.Component {
     }
   }
 
+  renderNavbar = () => {
+    const navbarStyle = css`
+      display: flex;
+      flex-direction: column;
+      justify-direction: flex-start;
+      font-family: "Montserrat", "sans-serif";
+      margin: 0px auto;
+      max-width: ${rhythm(48)};
+      min-height: ${rhythm(2)};
+      text-decoration: none;
+      @media only screen and (min-width: 768px) {
+        flex-direction: row;
+      }
+    `
+    if (this.state.mobile) {
+      return (
+        <div className="navbar navbar-mobile" css={navbarStyle}>
+          <div
+            css={css`
+              display: flex;
+              flex-flow: row nowrap;
+            `}
+          >
+            {this.renderHamburger()}
+            <Nightmode />
+          </div>
+          {this.state.navVisible && this.renderSpacer()}
+          {this.renderLinks()}
+        </div>
+      )
+    }
+    return (
+      <div className="navbar" css={navbarStyle}>
+        {this.renderLinks()}
+        <Nightmode />
+      </div>
+    )
+  }
+
   render() {
     return (
       <div
@@ -182,25 +214,7 @@ class Navbar extends React.Component {
           background: #333;
         `}
       >
-        <div
-          className="navbar"
-          css={css`
-            display: flex;
-            flex-direction: column;
-            font-family: "Montserrat", "sans-serif";
-            margin: 0px auto;
-            max-width: ${rhythm(48)};
-            min-height: ${rhythm(2)};
-            text-decoration: none;
-            @media only screen and (min-width: 768px) {
-              flex-direction: row;
-            }
-          `}
-        >
-          {this.renderHamburger()}
-          {this.renderLinks()}
-          {/* {this.renderLogo()} */}
-        </div>
+        {this.renderNavbar()}
       </div>
     )
   }
