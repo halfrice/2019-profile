@@ -2,36 +2,27 @@ import React from "react"
 import { css } from "@emotion/core"
 import { Link } from "gatsby"
 import Nightmode from "./nightmode"
-
+// import NavbarItem from "./navbar-item"
+import ThemeContext from "../../theme/theme-context"
 import { rhythm } from "../../utils/typography"
-import { FaCoffee } from "react-icons/fa"
 
+// Base Navbar Button Style
 export const itemStyle = css`
   align-items: center;
-  color: white;
+  color: inherit;
   cursor: pointer;
   display: flex;
-  height: 100%:
+  height: 100%;
   justify-content: center;
   padding: ${rhythm(0.5)} ${rhythm(0.75)};
   text-decoration: none;
-  &:hover {
-    background: #222;
-    color: #999;
-  }
   @media only screen and (max-width: 768px) {
     font-weight: 400;
     justify-content: start;
   }
 `
-
 // Must be written without semicolons otherwise will not render when
 // placed inside anything other than a css element, eg activeStyle={}.
-export const itemActiveStyle = {
-  color: "#999",
-  background: "#000",
-  borderBottom: "0.1rem solid #ff0075"
-}
 
 class Navbar extends React.Component {
   state = {
@@ -67,17 +58,33 @@ class Navbar extends React.Component {
     this.setState({ navVisible: !this.state.navVisible })
   }
 
-  renderHamburger = () => {
+  handleLinkClick() {
+    if (this.state.mobile && this.state.navVisible) {
+      this.setState({ navVisible: false })
+    }
+  }
+
+  renderHamburger = (theme, styles) => {
+    // const savecss = css`
+    //   ${itemStyle};
+    //   font-weight: 700;
+    //   min-height: ${rhythm(2)};
+    //   &:hover {
+    //     color: ${theme.navbarHoverColor};
+    //     cursor: pointer;
+    //   }
+    //   @media only screen and (max-width: 768px) {
+    //     font-weight: 700;
+    //   }
+    // `
     return (
       <>
         <a
           css={css`
-            ${itemStyle};
-            font-weight: 700;
-            min-height: ${rhythm(2)};
+            ${styles.button}
             &:hover {
-              color: #999;
-              cursor: pointer;
+              ${styles.buttonActive}
+              border-bottom: 0;
             }
             @media only screen and (max-width: 768px) {
               font-weight: 700;
@@ -91,7 +98,7 @@ class Navbar extends React.Component {
     )
   }
 
-  renderSpacer = () => {
+  renderSpacer = theme => {
     return (
       <>
         <div
@@ -99,78 +106,68 @@ class Navbar extends React.Component {
           css={css`
             height: 1px;
             margin: 0 ${rhythm(0.75)} ${rhythm(0.5)};
-            border-bottom: 1px solid #555;
+            /* border-bottom: 1px solid #555; */
+            border-bottom: 1px solid ${theme.navbarHover};
           `}
         />
       </>
     )
   }
 
-  renderLogo = () => {
-    return (
-      <>
-        <a
-          className="item"
-          css={css`
-            ${itemStyle};
-            color: deeppink;
-            align-items: center;
-            font-size: 20px;
-            margin-left: auto;
-          `}
-        >
-          <FaCoffee />
-        </a>
-      </>
-    )
-  }
-
-  renderLinks = () => {
+  renderLinks = (theme, styles) => {
     if (this.state.navVisible) {
       return (
         <>
           <Link
-            className="item"
             to={`/`}
-            css={itemStyle}
-            activeStyle={itemActiveStyle}
+            onClick={() => this.handleLinkClick()}
+            css={styles.button}
+            activeStyle={styles.buttonActive}
           >
             Home
           </Link>
           <Link
-            className="item"
             to={`/projects/`}
-            css={itemStyle}
-            activeStyle={itemActiveStyle}
+            onClick={() => this.handleLinkClick()}
+            css={styles.button}
+            activeStyle={styles.buttonActive}
           >
             Projects
           </Link>
           <Link
-            className="item"
             to={`/about/`}
-            css={itemStyle}
-            activeStyle={itemActiveStyle}
+            onClick={() => this.handleLinkClick()}
+            css={styles.button}
+            activeStyle={styles.buttonActive}
           >
             About
           </Link>
           <Link
-            className="item"
             to={`/contact/`}
-            css={itemStyle}
-            activeStyle={itemActiveStyle}
+            onClick={() => this.handleLinkClick()}
+            css={styles.button}
+            activeStyle={styles.buttonActive}
           >
             Contact
+          </Link>
+          <Link
+            to={`/theme/`}
+            onClick={() => this.handleLinkClick()}
+            css={styles.button}
+            activeStyle={styles.buttonActive}
+          >
+            Theme
           </Link>
         </>
       )
     }
   }
 
-  renderNavbar = () => {
+  renderNavbar = theme => {
     const navbarStyle = css`
       display: flex;
       flex-direction: column;
-      justify-direction: flex-start;
+      justify-content: flex-start;
       font-family: "Montserrat", "sans-serif";
       margin: 0px auto;
       max-width: ${rhythm(48)};
@@ -180,42 +177,85 @@ class Navbar extends React.Component {
         flex-direction: row;
       }
     `
+    const styles = {
+      button: css`
+        align-items: center;
+        color: inherit;
+        cursor: pointer;
+        display: flex;
+        height: 100%;
+        max-height: ${rhythm(2)};
+        justify-content: center;
+        padding: ${rhythm(0.5)} ${rhythm(0.75)};
+        text-decoration: none;
+        @media only screen and (max-width: 768px) {
+          font-weight: 400;
+          justify-content: start;
+        }
+        &:hover {
+          background: ${theme.navbarHover};
+          color: ${theme.navbarHoverColor};
+        }
+      `,
+      buttonHover: css`
+        background: ${theme.navbarHover};
+        color: ${theme.navbarHoverColor};
+      `,
+      buttonActive: {
+        background: theme.background,
+        color: theme.color,
+        borderBottom: "1px solid " + theme.navbarHighlight
+      }
+    }
     if (this.state.mobile) {
       return (
-        <div className="navbar navbar-mobile" css={navbarStyle}>
+        <div
+          className="navbar navbar-mobile"
+          css={css`
+            ${navbarStyle};
+            padding-bottom: ${this.state.navVisible ? rhythm(0.5) : 0};
+          `}
+        >
           <div
             css={css`
               display: flex;
-              flex-flow: row nowrap;
+              /* flex-flow: row nowrap; */
             `}
           >
-            {this.renderHamburger()}
-            <Nightmode />
+            {this.renderHamburger(theme, styles)}
+            <Nightmode styles={styles} />
           </div>
-          {this.state.navVisible && this.renderSpacer()}
-          {this.renderLinks()}
+          {this.state.navVisible && this.renderSpacer(theme)}
+          {this.renderLinks(theme, styles)}
+        </div>
+      )
+    } else {
+      return (
+        <div className="navbar" css={navbarStyle}>
+          {this.renderLinks(theme, styles)}
+          <Nightmode styles={styles} />
         </div>
       )
     }
-    return (
-      <div className="navbar" css={navbarStyle}>
-        {this.renderLinks()}
-        <Nightmode />
-      </div>
-    )
   }
 
   render() {
     return (
-      <div
-        className="navbar-wrapper"
-        css={css`
-          width: 100%;
-          background: #333;
-        `}
-      >
-        {this.renderNavbar()}
-      </div>
+      <ThemeContext.Consumer>
+        {({ theme }) => (
+          // Navbar wrapper is used for visuals
+          <div
+            className="navbar-wrapper"
+            css={css`
+              background: ${theme.navbar};
+              color: ${theme.color};
+              width: 100%;
+            `}
+          >
+            {this.renderNavbar(theme)}
+          </div>
+        )}
+      </ThemeContext.Consumer>
     )
   }
 }

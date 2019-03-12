@@ -12,8 +12,6 @@ class Footer extends React.Component {
         className="footer"
         id="footer"
         css={css`
-          color: #888;
-          background: #000;
           font-family: "Montserrat", "Sans-Serif";
           font-size: 12px;
           margin: 0px auto;
