@@ -2,33 +2,22 @@ import React from "react"
 import { css } from "@emotion/core"
 import { Link } from "gatsby"
 import Nightmode from "./nightmode"
-// import NavbarItem from "./navbar-item"
 import ThemeContext from "../../theme/theme-context"
 import { rhythm } from "../../utils/typography"
-
-// Base Navbar Button Style
-export const itemStyle = css`
-  align-items: center;
-  color: inherit;
-  cursor: pointer;
-  display: flex;
-  height: 100%;
-  justify-content: center;
-  padding: ${rhythm(0.5)} ${rhythm(0.75)};
-  text-decoration: none;
-  @media only screen and (max-width: 768px) {
-    font-weight: 400;
-    justify-content: start;
-  }
-`
-// Must be written without semicolons otherwise will not render when
-// placed inside anything other than a css element, eg activeStyle={}.
+import Hamburger from "./hamburger"
 
 class Navbar extends React.Component {
   state = {
     width: window.innerWidth,
     mobile: window.innerWidth <= 768,
-    navVisible: window.innerWidth > 768
+    navVisible: window.innerWidth > 768,
+    links: [
+      { text: "Home", to: "/" },
+      { text: "Projects", to: "/projects" },
+      { text: "About", to: "/about" },
+      { text: "Contact", to: "/contact" },
+      { text: "Theme", to: "/theme" }
+    ]
   }
 
   handleResize = () => {
@@ -58,6 +47,11 @@ class Navbar extends React.Component {
     this.setState({ navVisible: !this.state.navVisible })
   }
 
+  handleBurgerClick = () => {
+    this.setState({ navVisible: !this.state.navVisible })
+    console.log("Hamburger clicked.")
+  }
+
   handleLinkClick() {
     if (this.state.mobile && this.state.navVisible) {
       this.setState({ navVisible: false })
@@ -65,34 +59,23 @@ class Navbar extends React.Component {
   }
 
   renderHamburger = (theme, styles) => {
-    // const savecss = css`
-    //   ${itemStyle};
-    //   font-weight: 700;
-    //   min-height: ${rhythm(2)};
-    //   &:hover {
-    //     color: ${theme.navbarHoverColor};
-    //     cursor: pointer;
-    //   }
-    //   @media only screen and (max-width: 768px) {
-    //     font-weight: 700;
-    //   }
-    // `
     return (
       <>
         <a
-          css={css`
-            ${styles.button}
-            &:hover {
-              ${styles.buttonActive}
-              border-bottom: 0;
-            }
-            @media only screen and (max-width: 768px) {
-              font-weight: 700;
-            }
-          `}
+          // css={css`
+          //   ${styles.button}
+          //   &:hover {
+          //     ${styles.buttonActive}
+          //     border-bottom: 0;
+          //   }
+          //   @media only screen and (max-width: 768px) {
+          //     font-weight: 700;
+          //   }
+          // `}
           onClick={() => this.handleHamburgerClick()}
         >
-          <span>|||</span>
+          <Hamburger styles={styles} collapsed={this.state.navVisible} />
+          {/* <span>|||</span> */}
         </a>
       </>
     )
@@ -106,7 +89,6 @@ class Navbar extends React.Component {
           css={css`
             height: 1px;
             margin: 0 ${rhythm(0.75)} ${rhythm(0.5)};
-            /* border-bottom: 1px solid #555; */
             border-bottom: 1px solid ${theme.navbarHover};
           `}
         />
@@ -114,52 +96,20 @@ class Navbar extends React.Component {
     )
   }
 
-  renderLinks = (theme, styles) => {
+  renderLinks = styles => {
+    const links = this.state.links.map((link, i) => (
+      <Link
+        key={i}
+        to={link.to}
+        onClick={() => this.handleLinkClick()}
+        css={styles.button}
+        activeStyle={styles.buttonActive}
+      >
+        {link.text}
+      </Link>
+    ))
     if (this.state.navVisible) {
-      return (
-        <>
-          <Link
-            to={`/`}
-            onClick={() => this.handleLinkClick()}
-            css={styles.button}
-            activeStyle={styles.buttonActive}
-          >
-            Home
-          </Link>
-          <Link
-            to={`/projects/`}
-            onClick={() => this.handleLinkClick()}
-            css={styles.button}
-            activeStyle={styles.buttonActive}
-          >
-            Projects
-          </Link>
-          <Link
-            to={`/about/`}
-            onClick={() => this.handleLinkClick()}
-            css={styles.button}
-            activeStyle={styles.buttonActive}
-          >
-            About
-          </Link>
-          <Link
-            to={`/contact/`}
-            onClick={() => this.handleLinkClick()}
-            css={styles.button}
-            activeStyle={styles.buttonActive}
-          >
-            Contact
-          </Link>
-          <Link
-            to={`/theme/`}
-            onClick={() => this.handleLinkClick()}
-            css={styles.button}
-            activeStyle={styles.buttonActive}
-          >
-            Theme
-          </Link>
-        </>
-      )
+      return <>{links}</>
     }
   }
 
@@ -188,6 +138,11 @@ class Navbar extends React.Component {
         justify-content: center;
         padding: ${rhythm(0.5)} ${rhythm(0.75)};
         text-decoration: none;
+        -webkit-transition: all 0.7s ease;
+        -moz-transition: all 0.7s ease;
+        -ms-transition: all 0.7s ease;
+        -o-transition: all 0.7s ease;
+        transition: all 0.7s ease;
         @media only screen and (max-width: 768px) {
           font-weight: 400;
           justify-content: start;
@@ -219,20 +174,25 @@ class Navbar extends React.Component {
           <div
             css={css`
               display: flex;
-              /* flex-flow: row nowrap; */
+              flex-flow: row nowrap;
             `}
           >
+            {/* <Hamburger
+              onClick={this.handleBurgerClick}
+              styles={styles}
+              collapsed={this.state.navVisible}
+            /> */}
             {this.renderHamburger(theme, styles)}
             <Nightmode styles={styles} />
           </div>
           {this.state.navVisible && this.renderSpacer(theme)}
-          {this.renderLinks(theme, styles)}
+          {this.renderLinks(styles)}
         </div>
       )
     } else {
       return (
         <div className="navbar" css={navbarStyle}>
-          {this.renderLinks(theme, styles)}
+          {this.renderLinks(styles)}
           <Nightmode styles={styles} />
         </div>
       )
@@ -243,7 +203,6 @@ class Navbar extends React.Component {
     return (
       <ThemeContext.Consumer>
         {({ theme }) => (
-          // Navbar wrapper is used for visuals
           <div
             className="navbar-wrapper"
             css={css`

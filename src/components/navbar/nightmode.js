@@ -70,6 +70,7 @@ export default class Nightmode extends React.Component {
   }
 
   render() {
+    let styles = this.props.styles || {}
     return (
       <ThemeContext.Consumer>
         {({ theme, setTheme }) => (
@@ -82,7 +83,7 @@ export default class Nightmode extends React.Component {
             <a
               className="nightmode-button-wrapper"
               onClick={() => this.toggleNightmode(setTheme)}
-              css={this.props.styles.button}
+              css={styles.button}
             >
               {this.renderIcon(theme)}
               {/* <FaSun

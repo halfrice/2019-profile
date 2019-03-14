@@ -28,9 +28,9 @@ class Layout extends React.Component {
                 css={css`
                   margin: 0 auto;
                   max-width: ${rhythm(48)};
-                  /* box-shadow: 0 0 3rem rgba(0, 0, 0, 0.6);
-                  -moz-box-shadow: 0 0 3rem rgba(0, 0, 0, 0.6);
-                  -webkit-box-shadow: 0 0 3rem rgba(0, 0, 0, 0.6); */
+                  /* box-shadow: 0 6rem 6rem rgba(0, 0, 0, 0.1); */
+                  /* -moz-box-shadow: 0 0 3rem rgba(0, 0, 0, 0.6); */
+                  /* -webkit-box-shadow: 0 0 3rem rgba(0, 0, 0, 0.6); */
                 `}
               >
                 <div
